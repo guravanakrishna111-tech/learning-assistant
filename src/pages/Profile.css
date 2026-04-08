@@ -35,6 +35,13 @@
   justify-content: center;
 }
 
+.ProfileImageBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
 .profileHeader img{
   width: 120px;
   height: 120px;
@@ -48,6 +55,34 @@
 .profileHeader img:hover{
   transform: scale(1.1) rotate(2deg);
   box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+}
+
+.HiddenProfileFileInput {
+  display: none;
+}
+
+.ProfileImageButton {
+  padding: 10px 14px;
+  border: 1px dashed rgba(255,255,255,0.7);
+  border-radius: 999px;
+  background: rgba(255,255,255,0.14);
+  color: white;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.ProfileImageButton:hover {
+  background: rgba(255,255,255,0.24);
+  transform: translateY(-2px);
+}
+
+.ProfileImageMeta {
+  max-width: 180px;
+  color: rgba(255,255,255,0.82);
+  font-size: 0.82rem;
+  word-break: break-word;
 }
 
 .headerInfo {
@@ -122,6 +157,14 @@
   font-size: 1.5rem;
   color: #1f2937;
   text-align: center;
+}
+
+.ProfileError {
+  margin-bottom: 16px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: #fef2f2;
+  color: #b91c1c;
 }
 
 .FormGroup {

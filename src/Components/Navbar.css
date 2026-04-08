@@ -1,10 +1,10 @@
 .MainDiv{
   width:100vw;
-  height:70px;
+  min-height:70px;
   display:flex;
   align-items:center;
   justify-content:space-between;
-  padding:0 40px;
+  padding:12px 40px;
   background:linear-gradient(120deg,#0f172a,#1e293b);
   box-shadow:0 6px 20px rgba(0,0,0,.4);
   position:sticky;
@@ -30,6 +30,8 @@
   display:flex;
   align-items:center;
   gap:28px;
+  flex-wrap:wrap;
+  justify-content:center;
 }
 
 .item a{
@@ -71,9 +73,39 @@
   box-shadow:0 0 14px rgba(99,102,241,.5);
 }
 
+.NavbarUserArea{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.NavbarUserLabel{
+  font-size:14px;
+  color:#e2e8f0;
+}
+
+.NavbarLogoutButton{
+  padding:8px 15px;
+  background-color:#EF4444;
+  color:white;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+  font-weight:600;
+}
+
+.NavbarSigninLink{
+  font-size:14px;
+  color:#93c5fd;
+  text-decoration:none;
+  font-weight:600;
+}
+
 @media(max-width:768px){
   .MainDiv{
     padding:0 20px;
+    gap:12px;
+    justify-content:center;
   }
 
   .navItems{
@@ -87,5 +119,10 @@
 
   .logo{
     height:38px;
+  }
+
+  .NavbarUserArea{
+    width:100%;
+    justify-content:center;
   }
 }

@@ -1,5 +1,6 @@
-import { db, auth } from './firebaseconfig';
+import { db, auth, storage } from './firebaseconfig';
 import {
+  addDoc,
   collection,
   doc,
   setDoc,
@@ -7,13 +8,19 @@ import {
   updateDoc,
   deleteDoc,
   query,
-  where,
   getDocs,
   onSnapshot,
+  orderBy,
   arrayUnion,
   arrayRemove
 } from 'firebase/firestore';
 import { onAuthStateChanged } from 'firebase/auth';
+import {
+  ref as storageRef,
+  uploadBytes,
+  getDownloadURL,
+  deleteObject
+} from 'firebase/storage';
 
 // Get current user ID
 export const getCurrentUserId = () => {
@@ -310,5 +317,179 @@ export const onStreakChange = (userId, callback) => {
     } else {
       callback({ streak: 0, lastDate: null });
     }
+  });
+};
+
+// ========== RESOURCES ==========
+
+const normalizeFirestoreDate = (value) => {
+  if (!value) return null;
+  if (typeof value.toDate === 'function') {
+    return value.toDate();
+  }
+  if (value instanceof Date) {
+    return value;
+  }
+
+  return new Date(value);
+};
+
+const normalizeResource = (docSnap) => {
+  const data = docSnap.data();
+
+  return {
+    id: docSnap.id,
+    ...data,
+    createdAt: normalizeFirestoreDate(data.createdAt),
+    updatedAt: normalizeFirestoreDate(data.updatedAt),
+    lastOpenedAt: normalizeFirestoreDate(data.lastOpenedAt),
+    lastStudiedAt: normalizeFirestoreDate(data.lastStudiedAt)
+  };
+};
+
+const sanitizeFileName = (fileName = 'file') => {
+  return fileName.replace(/[^a-zA-Z0-9._-]/g, '_');
+};
+
+export const uploadResourceFile = async (userId, file) => {
+  try {
+    if (!userId || !file) return null;
+
+    const normalizedName = sanitizeFileName(file.name);
+    const storagePath = `users/${userId}/resources/${Date.now()}-${normalizedName}`;
+    const fileRef = storageRef(storage, storagePath);
+
+    await uploadBytes(fileRef, file, {
+      contentType: file.type || 'application/octet-stream'
+    });
+
+    const fileUrl = await getDownloadURL(fileRef);
+
+    return {
+      fileUrl,
+      storagePath,
+      fileName: file.name,
+      mimeType: file.type,
+      fileSize: file.size
+    };
+  } catch (error) {
+    console.error('Error uploading resource file:', error);
+    throw error;
+  }
+};
+
+export const uploadProfileImage = async (userId, file) => {
+  try {
+    if (!userId || !file) return null;
+
+    const fileRef = storageRef(storage, `users/${userId}/profile/avatar`);
+
+    await uploadBytes(fileRef, file, {
+      contentType: file.type || 'application/octet-stream'
+    });
+
+    const photoUrl = await getDownloadURL(fileRef);
+
+    return {
+      photoUrl,
+      photoName: file.name,
+      photoStoragePath: fileRef.fullPath
+    };
+  } catch (error) {
+    console.error('Error uploading profile image:', error);
+    throw error;
+  }
+};
+
+export const deleteStoredFile = async (storagePath) => {
+  try {
+    if (!storagePath) return false;
+
+    const fileRef = storageRef(storage, storagePath);
+    await deleteObject(fileRef);
+    return true;
+  } catch (error) {
+    console.error('Error deleting stored file:', error);
+    return false;
+  }
+};
+
+export const addResource = async (userId, resource) => {
+  try {
+    if (!userId) return null;
+
+    const now = new Date();
+    const resourcesRef = collection(db, 'users', userId, 'resources');
+    const docRef = await addDoc(resourcesRef, {
+      ...resource,
+      createdAt: now,
+      updatedAt: now
+    });
+
+    return docRef.id;
+  } catch (error) {
+    console.error('Error adding resource:', error);
+    throw error;
+  }
+};
+
+export const getResources = async (userId) => {
+  try {
+    if (!userId) return [];
+
+    const resourcesRef = collection(db, 'users', userId, 'resources');
+    const resourcesQuery = query(resourcesRef, orderBy('updatedAt', 'desc'));
+    const snapshot = await getDocs(resourcesQuery);
+
+    return snapshot.docs.map(normalizeResource);
+  } catch (error) {
+    console.error('Error getting resources:', error);
+    return [];
+  }
+};
+
+export const updateResource = async (userId, resourceId, updates) => {
+  try {
+    if (!userId || !resourceId) return false;
+
+    const resourceRef = doc(db, 'users', userId, 'resources', resourceId);
+    await updateDoc(resourceRef, {
+      ...updates,
+      updatedAt: new Date()
+    });
+
+    return true;
+  } catch (error) {
+    console.error('Error updating resource:', error);
+    throw error;
+  }
+};
+
+export const deleteResource = async (userId, resourceId, storagePath = '') => {
+  try {
+    if (!userId || !resourceId) return false;
+
+    if (storagePath) {
+      await deleteStoredFile(storagePath);
+    }
+
+    const resourceRef = doc(db, 'users', userId, 'resources', resourceId);
+    await deleteDoc(resourceRef);
+
+    return true;
+  } catch (error) {
+    console.error('Error deleting resource:', error);
+    throw error;
+  }
+};
+
+export const onResourcesChange = (userId, callback) => {
+  if (!userId) return () => {};
+
+  const resourcesRef = collection(db, 'users', userId, 'resources');
+  const resourcesQuery = query(resourcesRef, orderBy('updatedAt', 'desc'));
+
+  return onSnapshot(resourcesQuery, (snapshot) => {
+    callback(snapshot.docs.map(normalizeResource));
   });
 };

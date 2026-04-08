@@ -1,0 +1,568 @@
+.ResourcesShell {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at top left, rgba(255, 255, 255, 0.18), transparent 28%),
+    radial-gradient(circle at bottom right, rgba(56, 189, 248, 0.2), transparent 24%),
+    linear-gradient(135deg, #0f172a 0%, #12314f 42%, #1d4ed8 100%);
+  padding: 32px 20px 56px;
+}
+
+.ResourcesAmbient {
+  position: absolute;
+  border-radius: 999px;
+  filter: blur(10px);
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.ResourcesAmbientOne {
+  top: 120px;
+  right: -60px;
+  width: 220px;
+  height: 220px;
+  background: rgba(14, 165, 233, 0.24);
+}
+
+.ResourcesAmbientTwo {
+  bottom: 140px;
+  left: -80px;
+  width: 260px;
+  height: 260px;
+  background: rgba(249, 115, 22, 0.18);
+}
+
+.ResourcesContent {
+  position: relative;
+  z-index: 1;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.ResourcesHero,
+.ResourceWorkspace {
+  display: grid;
+  gap: 24px;
+}
+
+.ResourcesHero {
+  grid-template-columns: minmax(0, 1.4fr) minmax(320px, 0.9fr);
+  margin-bottom: 28px;
+}
+
+.ResourcesHeroIntro,
+.ContinueCard,
+.ResourceFormCard,
+.ResourceLibraryCard,
+.ResourcesSigninCard {
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 28px;
+  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.2);
+  backdrop-filter: blur(16px);
+}
+
+.ResourcesHeroIntro,
+.ContinueCard,
+.ResourcesSigninCard {
+  padding: 34px;
+}
+
+.ResourcesHeroIntro h1,
+.ContinueCard h2,
+.ResourcesSigninCard h1,
+.CardHeader h2 {
+  margin: 0;
+  color: #0f172a;
+}
+
+.ResourcesHeroIntro h1 {
+  font-size: clamp(2.2rem, 5vw, 3.6rem);
+  line-height: 1.05;
+  max-width: 10ch;
+}
+
+.ResourcesHeroIntro p,
+.ContinueCard p,
+.ResourcesSigninCard p,
+.CardHeader p,
+.ResourceEmptyState p,
+.ResourceNotes {
+  color: #475569;
+  line-height: 1.6;
+}
+
+.SectionEyebrow {
+  display: inline-flex;
+  align-items: center;
+  margin-bottom: 14px;
+  padding: 7px 14px;
+  border-radius: 999px;
+  background: rgba(14, 165, 233, 0.1);
+  color: #0f766e;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.ResourcesStatsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 16px;
+  margin-top: 28px;
+}
+
+.ResourcesStatCard {
+  padding: 18px 20px;
+  border-radius: 20px;
+  background: linear-gradient(145deg, #eff6ff, #ffffff);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+.ResourcesStatLabel,
+.MetaLabel {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #64748b;
+}
+
+.ResourcesStatCard strong,
+.ContinueMeta span,
+.ResourceMetaGrid strong {
+  color: #0f172a;
+}
+
+.ResourcesStatCard strong {
+  font-size: 1.9rem;
+}
+
+.ContinueCard {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 18px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(239, 246, 255, 0.92)),
+    linear-gradient(135deg, rgba(14, 165, 233, 0.08), transparent 65%);
+}
+
+.ContinueMeta {
+  display: grid;
+  gap: 10px;
+  margin-top: auto;
+}
+
+.ResourceWorkspace {
+  grid-template-columns: minmax(360px, 420px) minmax(0, 1fr);
+}
+
+.ResourceFormCard,
+.ResourceLibraryCard {
+  padding: 30px;
+}
+
+.CardHeader {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 22px;
+}
+
+.CardHeader p {
+  max-width: 320px;
+  margin: 0;
+}
+
+.ResourceForm {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.ResourceForm label,
+.ResourceManageGrid label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.ResourceForm input,
+.ResourceForm select,
+.ResourceForm textarea,
+.LibraryToolbar input,
+.LibraryToolbar select,
+.ResourceManageGrid input,
+.ResourceManageGrid select,
+.ResourceManageGrid textarea {
+  width: 100%;
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  border-radius: 16px;
+  padding: 13px 14px;
+  font-size: 0.97rem;
+  color: #0f172a;
+  background: #fff;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ResourceForm input:focus,
+.ResourceForm select:focus,
+.ResourceForm textarea:focus,
+.LibraryToolbar input:focus,
+.LibraryToolbar select:focus,
+.ResourceManageGrid input:focus,
+.ResourceManageGrid select:focus,
+.ResourceManageGrid textarea:focus {
+  outline: none;
+  border-color: rgba(14, 165, 233, 0.75);
+  box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.12);
+}
+
+.InlineChoiceGroup {
+  display: flex;
+  gap: 10px;
+  align-items: end;
+}
+
+.ChoiceButton,
+.PrimaryAction,
+.SecondaryAction,
+.DangerAction,
+.SubjectChip {
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.ChoiceButton {
+  flex: 1;
+  padding: 13px 12px;
+  border-radius: 16px;
+  background: #e2e8f0;
+  color: #1e293b;
+  font-weight: 700;
+}
+
+.ChoiceButton.active,
+.PrimaryAction {
+  background: linear-gradient(135deg, #0284c7, #1d4ed8);
+  color: #fff;
+  box-shadow: 0 18px 32px rgba(29, 78, 216, 0.22);
+}
+
+.SecondaryAction {
+  background: #e0f2fe;
+  color: #075985;
+}
+
+.DangerAction {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.PrimaryAction,
+.SecondaryAction,
+.DangerAction {
+  padding: 12px 18px;
+  border-radius: 16px;
+  font-weight: 700;
+}
+
+.PrimaryAction:hover,
+.SecondaryAction:hover,
+.DangerAction:hover,
+.ChoiceButton:hover,
+.SubjectChip:hover {
+  transform: translateY(-1px);
+}
+
+.FullWidthField {
+  grid-column: 1 / -1;
+}
+
+.HiddenFileInput {
+  display: none;
+}
+
+.FilePickerButton {
+  width: 100%;
+  padding: 13px 14px;
+  border: 1px dashed rgba(14, 165, 233, 0.45);
+  border-radius: 16px;
+  background: #eff6ff;
+  color: #075985;
+  font-size: 0.97rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: border-color 0.2s ease, transform 0.2s ease, background 0.2s ease;
+}
+
+.FilePickerButton:hover {
+  transform: translateY(-1px);
+  border-color: rgba(29, 78, 216, 0.55);
+  background: #dbeafe;
+}
+
+.FilePickerStatus {
+  padding: 12px 14px;
+  border-radius: 16px;
+  background: #f8fafc;
+  border: 1px solid rgba(148, 163, 184, 0.24);
+  color: #334155;
+  font-size: 0.94rem;
+  word-break: break-word;
+}
+
+.FileField small,
+.FormError {
+  display: block;
+  margin-top: 4px;
+}
+
+.FileField small {
+  color: #64748b;
+}
+
+.FormError {
+  grid-column: 1 / -1;
+  padding: 12px 14px;
+  border-radius: 16px;
+  background: #fef2f2;
+  color: #b91c1c;
+}
+
+.FormActions {
+  grid-column: 1 / -1;
+  display: flex;
+  gap: 12px;
+}
+
+.LibraryToolbar {
+  display: grid;
+  grid-template-columns: minmax(260px, 1.3fr) repeat(3, minmax(0, 0.7fr));
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.SubjectChipRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 22px;
+}
+
+.SubjectChip {
+  padding: 10px 16px;
+  border-radius: 999px;
+  background: var(--chip-background, rgba(15, 23, 42, 0.08));
+  color: var(--chip-color, #0f172a);
+  font-weight: 700;
+}
+
+.SubjectChip.active {
+  box-shadow: inset 0 0 0 2px currentColor;
+}
+
+.ResourceGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 20px;
+}
+
+.ResourceCard {
+  overflow: hidden;
+  border-radius: 24px;
+  background: #fff;
+  border: 1px solid rgba(148, 163, 184, 0.24);
+  box-shadow: 0 16px 38px rgba(15, 23, 42, 0.1);
+}
+
+.ResourceVisual {
+  min-height: 190px;
+}
+
+.ResourceVisualImage img,
+.ResourceVisualVideo video {
+  width: 100%;
+  height: 100%;
+  min-height: 190px;
+  display: block;
+  object-fit: cover;
+  background: #0f172a;
+}
+
+.ResourceVisualFallback {
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  gap: 10px;
+  padding: 24px;
+  color: #fff;
+  background:
+    radial-gradient(circle at top right, rgba(255, 255, 255, 0.2), transparent 35%),
+    linear-gradient(135deg, #0f766e, #1d4ed8);
+}
+
+.ResourceVisualFallback.pdf {
+  background: linear-gradient(135deg, #7c2d12, #ea580c);
+}
+
+.ResourceVisualFallback.document {
+  background: linear-gradient(135deg, #4338ca, #0f766e);
+}
+
+.ResourceVisualFallback.text {
+  background: linear-gradient(135deg, #155e75, #0f172a);
+}
+
+.ResourceVisualEyebrow {
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.8;
+}
+
+.ResourceCardBody {
+  display: grid;
+  gap: 18px;
+  padding: 22px;
+}
+
+.ResourceCardTop h3 {
+  margin: 0;
+  color: #0f172a;
+  font-size: 1.35rem;
+}
+
+.ResourceTagRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.SubjectPill,
+.StatusPill {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.StatusPill.idle {
+  background: #e2e8f0;
+  color: #334155;
+}
+
+.StatusPill.progress {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.StatusPill.completed {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.ResourceMetaGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  padding: 16px;
+  border-radius: 18px;
+  background: #f8fafc;
+}
+
+.PreviewTextBox {
+  padding: 16px;
+  border-radius: 18px;
+  background: #f8fafc;
+  color: #334155;
+  white-space: pre-wrap;
+}
+
+.ProgressTrack {
+  width: 100%;
+  height: 10px;
+  border-radius: 999px;
+  background: #dbeafe;
+  overflow: hidden;
+}
+
+.ProgressFill {
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #06b6d4, #2563eb);
+}
+
+.ResourceManageGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.ResourceActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.ResourceEmptyState,
+.ResourcesSigninCard {
+  text-align: center;
+  padding: 42px;
+}
+
+@media (max-width: 1100px) {
+  .ResourcesHero,
+  .ResourceWorkspace,
+  .LibraryToolbar,
+  .ResourceManageGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .CardHeader {
+    flex-direction: column;
+  }
+
+  .CardHeader p {
+    max-width: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .ResourcesShell {
+    padding: 20px 14px 40px;
+  }
+
+  .ResourcesHeroIntro,
+  .ContinueCard,
+  .ResourceFormCard,
+  .ResourceLibraryCard {
+    padding: 22px;
+  }
+
+  .ResourceForm,
+  .ResourcesStatsGrid,
+  .ResourceGrid,
+  .ResourceMetaGrid,
+  .ResourceManageGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .InlineChoiceGroup,
+  .FormActions,
+  .ResourceActions {
+    flex-direction: column;
+  }
+}

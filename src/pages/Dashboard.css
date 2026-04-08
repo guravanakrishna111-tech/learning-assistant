@@ -150,6 +150,118 @@
   font-weight: 600;
 }
 
+.ResourceSpotlightSection {
+  margin-bottom: 40px;
+}
+
+.ResourceSpotlightCard {
+  padding: 32px;
+  border-radius: 20px;
+  background:
+    radial-gradient(circle at top right, rgba(14, 165, 233, 0.15), transparent 28%),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.96), rgba(239, 246, 255, 0.96));
+  box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+}
+
+.ResourceSpotlightHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+.ResourceEyebrow {
+  display: inline-flex;
+  margin-bottom: 10px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(14, 165, 233, 0.12);
+  color: #0f766e;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.ResourceSpotlightHeader h2 {
+  margin: 0;
+  font-size: 1.9rem;
+  color: #0f172a;
+  max-width: 14ch;
+}
+
+.ResourceLinkButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 18px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #0284c7, #1d4ed8);
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: 0 12px 24px rgba(29, 78, 216, 0.25);
+}
+
+.ResourceSpotlightGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.ResourceMiniCard {
+  padding: 18px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+.ResourceMiniCard span {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 0.85rem;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.ResourceMiniCard strong {
+  font-size: 2rem;
+  color: #0f172a;
+}
+
+.ResourceFocusRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 20px;
+  border-radius: 18px;
+  background: #0f172a;
+  color: #fff;
+}
+
+.ResourceFocusText h3,
+.ResourceFocusText p {
+  margin: 0;
+}
+
+.ResourceFocusText p {
+  margin-top: 8px;
+  color: rgba(255,255,255,0.78);
+}
+
+.ResourceFocusBadge {
+  padding: 10px 16px;
+  border-radius: 999px;
+  background: rgba(56, 189, 248, 0.18);
+  color: #bae6fd;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
 /* Task Manager Section */
 .TaskManagerSection {
   max-width: 1200px;
@@ -199,6 +311,21 @@
 
   .DashboardContent {
     padding: 20px 10px;
+  }
+
+  .ResourceSpotlightCard {
+    padding: 22px;
+  }
+
+  .ResourceSpotlightHeader,
+  .ResourceFocusRow {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .ResourceSpotlightHeader h2 {
+    max-width: none;
+    font-size: 1.5rem;
   }
 }
 

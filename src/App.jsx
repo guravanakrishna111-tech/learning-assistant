@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import './App.css'
 
 import Navbar from "./Components/Navbar";
@@ -12,16 +12,15 @@ import TaskManagerPage from "./pages/TaskManagerPage";
 import Analytics from "./pages/Analytics";
 import Settings from "./pages/Settings";
 import Login from "./pages/Login";
-import { onAuthChange } from './firebase/firebaseService';
-import { getTasks, saveTasks } from './firebase/firebaseService';
+import Resources from "./pages/Resources";
+import { onAuthChange, getTasks, saveTasks, onResourcesChange } from './firebase/firebaseService';
 
 const App = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
 const [Tasks, setTasks] = useState([]);
+const [resources, setResources] = useState([]);
 
 // Auth state listener
 useEffect(() => {
@@ -30,20 +29,11 @@ useEffect(() => {
     setLoading(false);
     if (!currentUser) {
       setTasks([]);
+      setResources([]);
     }
   });
   return unsubscribe;
 }, []);
-
-// Redirect to login if not authenticated (once initial load completes)
-useEffect(() => {
-  if (!loading && !user) {
-    // don't redirect if we're already on the login page
-    if (location.pathname !== '/login') {
-      navigate('/login');
-    }
-  }
-}, [loading, user, navigate, location]);
 
 // Load tasks from Firestore when user changes
 useEffect(() => {
@@ -56,6 +46,17 @@ useEffect(() => {
     });
   }
 }, [user]);
+
+// Load resources in real time when user changes
+useEffect(() => {
+  if (!user?.uid) return undefined;
+
+  const unsubscribe = onResourcesChange(user.uid, (data) => {
+    setResources(data);
+  });
+
+  return unsubscribe;
+}, [user?.uid]);
 
 // Save tasks to Firestore whenever they change
 useEffect(() => {
@@ -104,6 +105,7 @@ return (
             setTasks={setTasks}
             completedTasks={completedTasks}
             score={score}
+            resources={resources}
           />
         }
       />
@@ -114,6 +116,7 @@ return (
       <Route path="/profile" element={<Profile user={user} score={score} Tasks={Tasks} />} />
       <Route path="/tasks" element={<TaskManagerPage user={user} Tasks={Tasks} setTasks={setTasks} />} />
       <Route path="/analytics" element={<Analytics user={user} Tasks={Tasks} />} />
+      <Route path="/resources" element={<Resources user={user} resources={resources} />} />
       <Route path="/settings" element={<Settings user={user} Tasks={Tasks} setTasks={setTasks} />} />
 
       </Routes>
