@@ -1,0 +1,35 @@
+{
+  "modelType": "LinearRegression",
+  "version": "1.0",
+  "timestamp": "2024-01-01T00:00:00Z",
+  "coefficients": {
+    "studyHours": 3.2,
+    "sleepHours": 1.1,
+    "previousScore": 0.4,
+    "practiceTests": 1.5
+  },
+  "intercept": 5.0,
+  "metrics": {
+    "r2Score": 0.87,
+    "mae": 4.5,
+    "trainingSetSize": 200
+  },
+  "featureScaling": {
+    "studyHours": {
+      "min": 0,
+      "max": 15
+    },
+    "sleepHours": {
+      "min": 4,
+      "max": 12
+    },
+    "previousScore": {
+      "min": 0,
+      "max": 100
+    },
+    "practiceTests": {
+      "min": 0,
+      "max": 10
+    }
+  }
+}

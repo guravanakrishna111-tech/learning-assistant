@@ -13,6 +13,7 @@ import Analytics from "./pages/Analytics";
 import Settings from "./pages/Settings";
 import Login from "./pages/Login";
 import Resources from "./pages/Resources";
+import PerformancePrediction from "./pages/PerformancePrediction";
 import { onAuthChange, getTasks, saveTasks, onResourcesChange } from './firebase/firebaseService';
 
 const App = () => {
@@ -118,6 +119,7 @@ return (
       <Route path="/analytics" element={<Analytics user={user} Tasks={Tasks} />} />
       <Route path="/resources" element={<Resources user={user} resources={resources} />} />
       <Route path="/settings" element={<Settings user={user} Tasks={Tasks} setTasks={setTasks} />} />
+      <Route path="/prediction" element={<PerformancePrediction user={user} />} />
 
       </Routes>
     </ErrorBoundary>

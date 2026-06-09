@@ -13,6 +13,7 @@ const navItems = [
   { to: '/history', label: 'History' },
   { to: '/profile', label: 'Profile' },
   { to: '/calculator', label: 'Calculator' },
+  { to: '/prediction', label: '📊 Performance' },
   { to: '/settings', label: 'Settings' }
 ];
 

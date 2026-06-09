@@ -1,0 +1,259 @@
+.prediction-result {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.score-card {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 2rem;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+
+.score-card h2 {
+  font-size: 1.3rem;
+  margin: 0 0 1rem 0;
+  color: white;
+}
+
+.score-display {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.score-value {
+  font-size: 3rem;
+  font-weight: bold;
+}
+
+.score-max {
+  font-size: 1.2rem;
+  opacity: 0.9;
+}
+
+.feedback-message {
+  font-size: 1rem;
+  line-height: 1.5;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.feedback-message p {
+  margin: 0;
+}
+
+.metrics-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+.metric-item {
+  background: #f8f9fa;
+  padding: 1.5rem;
+  border-radius: 12px;
+  text-align: center;
+  border: 2px solid #e9ecef;
+  transition: all 0.3s ease;
+}
+
+.metric-item:hover {
+  border-color: #667eea;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.1);
+}
+
+.metric-label {
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.metric-value {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #667eea;
+}
+
+.confidence-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.confidence-label {
+  font-weight: 600;
+  color: #555;
+  font-size: 0.95rem;
+}
+
+.confidence-bar {
+  width: 100%;
+  height: 24px;
+  background: #eee;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.confidence-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #4CAF50 0%, #45a049 100%);
+  transition: width 0.3s ease;
+}
+
+.confidence-percent {
+  text-align: center;
+  color: #333;
+  font-weight: 600;
+}
+
+.range-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.range-label {
+  font-weight: 600;
+  color: #555;
+  font-size: 0.95rem;
+}
+
+.range-display {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 1rem;
+  background: #f0f4ff;
+  border-radius: 8px;
+  border: 2px solid #e0e7ff;
+}
+
+.range-min, .range-max {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #667eea;
+}
+
+.range-dash {
+  color: #999;
+  font-size: 1.5rem;
+}
+
+.factors-analysis {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.factors-analysis h3 {
+  font-size: 1.1rem;
+  color: #333;
+  margin: 0;
+}
+
+.factors-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.factor-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.factor-name {
+  font-weight: 600;
+  color: #555;
+  font-size: 0.9rem;
+}
+
+.factor-bar {
+  width: 100%;
+  height: 20px;
+  background: #eee;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.factor-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #ff9800 0%, #ff6b6b 100%);
+  transition: width 0.3s ease;
+}
+
+.factor-percent {
+  font-size: 0.85rem;
+  color: #777;
+  text-align: right;
+}
+
+.input-summary {
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border-left: 4px solid #667eea;
+}
+
+.input-summary h3 {
+  margin: 0 0 1rem 0;
+  font-size: 1rem;
+  color: #333;
+}
+
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.summary-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.summary-label {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.summary-value {
+  font-weight: 600;
+  color: #333;
+}
+
+@media (max-width: 768px) {
+  .metrics-container {
+    grid-template-columns: 1fr;
+  }
+
+  .factors-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .summary-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .score-display {
+    flex-direction: column;
+  }
+
+  .score-value {
+    font-size: 2rem;
+  }
+
+  .metric-value {
+    font-size: 1.5rem;
+  }
+}
