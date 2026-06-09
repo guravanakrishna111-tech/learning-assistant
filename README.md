@@ -3,11 +3,6 @@
 A modern, responsive **Student Productivity Dashboard** built using **React + Vite** that helps students manage daily tasks, track productivity, and organize essential academic information in one centralized interface.
 
 ---
-
-## 🚀 Live Demo
-
-https://guravanakrishna111-tech.github.io/Student-Dashboard/
-
 ---
 
 ## 📌 Overview
