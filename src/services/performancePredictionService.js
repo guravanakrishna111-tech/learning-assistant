@@ -19,6 +19,28 @@ import { db } from '../firebase/firebaseconfig';
 let cachedDataset = null;
 const DATASET_SIZE = 200;
 
+// Seeded pseudo-random generator (LCG)
+function createRandom(seed) {
+  let s = seed;
+  return function() {
+    s = (s * 9301 + 49297) % 233280;
+    return s / 233280;
+  };
+}
+
+// Deterministic shuffle using seed
+function seededShuffle(arr, seed) {
+  const random = createRandom(seed);
+  const shuffled = [...arr];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(random() * (i + 1));
+    const temp = shuffled[i];
+    shuffled[i] = shuffled[j];
+    shuffled[j] = temp;
+  }
+  return shuffled;
+}
+
 /**
  * Get historical dataset for visualization
  */
@@ -36,8 +58,13 @@ export function getPrediction(metrics) {
   const prediction = predictExamScore(metrics);
   const dataset = getHistoricalDataset();
   
-  // Get predicted scores for all data points
-  const predictions = dataset.map(data => ({
+  // Deterministically split dataset (80/20) for model metrics (similar to train_test_split in Python)
+  const shuffledDataset = seededShuffle(dataset, 42);
+  const trainSize = Math.floor(DATASET_SIZE * 0.8);
+  const testSet = shuffledDataset.slice(trainSize); // 40 items
+
+  // Get predicted scores for test data points
+  const testPredictions = testSet.map(data => ({
     studyHours: data.studyHours,
     actual: data.examScore,
     predicted: predictExamScore({
@@ -48,9 +75,9 @@ export function getPrediction(metrics) {
     }).prediction
   }));
 
-  // Calculate metrics
-  const actualScores = dataset.map(d => d.examScore);
-  const predictedScores = predictions.map(p => p.predicted);
+  // Calculate metrics on the test set
+  const actualScores = testSet.map(d => d.examScore);
+  const predictedScores = testPredictions.map(p => p.predicted);
   
   const mae = calculateMAE(actualScores, predictedScores);
   const r2 = calculateR2Score(actualScores, predictedScores);
@@ -58,13 +85,13 @@ export function getPrediction(metrics) {
   return {
     ...prediction,
     prediction: Math.round(prediction.prediction * 100) / 100,
-    mae,
+    mae: Math.round(mae * 100) / 100,
     r2Score: Math.round(r2 * 100) / 100,
-    dataset,
-    predictions,
+    dataset, // Full 200 items for study hours scatter plot & preview
+    predictions: testPredictions, // 40 test items for actual vs predicted scatter plot
     modelMetrics: {
-      mae,
-      r2Score: r2,
+      mae: Math.round(mae * 100) / 100,
+      r2Score: Math.round(r2 * 100) / 100,
       dataPoints: dataset.length
     }
   };

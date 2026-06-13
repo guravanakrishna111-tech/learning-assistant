@@ -1,53 +1,197 @@
-.prediction-page {
-  padding: 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
+.prediction-page-container {
+  display: flex;
+  min-height: calc(100vh - 70px); /* Height minus Navbar */
+  background-color: #ffffff;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
-.prediction-page h1 {
-  color: #333;
-  margin-bottom: 2rem;
-  font-size: 2.5rem;
+.streamlit-sidebar {
+  width: 340px;
+  background-color: #f0f2f6; /* Streamlit light gray sidebar */
+  padding: 2rem 1.5rem;
+  border-right: 1px solid #e0e4ec;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  overflow-y: auto;
+}
+
+.streamlit-sidebar h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  color: #31333f;
+  font-weight: 600;
+  border-bottom: 2px solid #e0e4ec;
+  padding-bottom: 0.5rem;
+}
+
+.sidebar-welcome {
+  font-size: 0.95rem;
+  color: #555;
+  background: rgba(255, 255, 255, 0.6);
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  border: 1px solid #e0e4ec;
+  font-weight: 500;
+}
+
+.streamlit-main {
+  flex-grow: 1;
+  padding: 2.5rem;
+  box-sizing: border-box;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  background-color: #ffffff;
+}
+
+.main-title {
+  font-size: 40px;
+  font-weight: 700;
   text-align: center;
+  color: #4CAF50;
+  margin: 0 0 0.5rem 0;
+  animation: fadeIn 1s ease-in;
 }
 
-.prediction-container {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 3rem;
-  margin-bottom: 3rem;
-}
-
-.prediction-input {
-  background: #f8f9fa;
-  padding: 2rem;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-.prediction-output {
-  background: #fff;
-  padding: 2rem;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+.subtitle {
+  text-align: center;
+  font-size: 18px;
+  color: #555;
+  margin: 0 0 1.5rem 0;
+  animation: slideIn 1s ease-in;
 }
 
 .error-message {
-  background: #fee;
-  color: #c33;
+  background-color: #ffeef0;
+  color: #ff4b4b;
   padding: 1rem;
   border-radius: 8px;
-  margin-bottom: 1rem;
-  border-left: 4px solid #c33;
+  border-left: 4px solid #ff4b4b;
+  font-weight: 500;
 }
 
-@media (max-width: 768px) {
-  .prediction-container {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-  }
+.prediction-result-container {
+  animation: fadeIn 0.5s ease-out;
+}
 
-  .prediction-page h1 {
-    font-size: 1.8rem;
+/* Charts and metrics section */
+.streamlit-charts-section {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  margin-top: 1rem;
+}
+
+.metrics-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.metric-card {
+  background-color: #f8f9fb;
+  border: 1px solid #e0e4ec;
+  border-radius: 8px;
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.metric-label {
+  font-size: 0.9rem;
+  color: #555;
+  font-weight: 500;
+}
+
+.metric-value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #31333f;
+}
+
+/* Dataset Preview Table styling */
+.dataset-preview-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.dataset-preview-section h3 {
+  margin: 0;
+  font-size: 1.4rem;
+  color: #31333f;
+  font-weight: 600;
+}
+
+.dataset-table-container {
+  border: 1px solid #e0e4ec;
+  border-radius: 8px;
+  overflow: hidden;
+  max-height: 400px;
+  overflow-y: auto;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.dataset-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.95rem;
+}
+
+.dataset-table th {
+  background-color: #f8f9fb;
+  color: #555;
+  font-weight: 600;
+  padding: 0.75rem 1rem;
+  border-bottom: 2px solid #e0e4ec;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.dataset-table td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #e0e4ec;
+  color: #31333f;
+}
+
+.dataset-table tbody tr:hover {
+  background-color: #f1f3f6;
+}
+
+.dataset-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Keyframes for animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideIn {
+  from { transform: translateX(-20px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+/* Responsiveness */
+@media (max-width: 900px) {
+  .prediction-page-container {
+    flex-direction: column;
+  }
+  .streamlit-sidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid #e0e4ec;
+  }
+  .metrics-row {
+    grid-template-columns: 1fr;
   }
 }

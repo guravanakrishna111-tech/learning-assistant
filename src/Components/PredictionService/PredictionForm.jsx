@@ -6,14 +6,12 @@ export default function PredictionForm({ metrics, setMetrics, onPredict, loading
     const { name, value } = e.target;
     setMetrics(prev => ({
       ...prev,
-      [name]: parseFloat(value)
+      [name]: parseInt(value, 10)
     }));
   };
 
   return (
     <div className="prediction-form">
-      <h2>📝 Enter Your Study Metrics</h2>
-
       <div className="form-group">
         <label htmlFor="studyHours">
           Study Hours (0-15)
@@ -24,7 +22,7 @@ export default function PredictionForm({ metrics, setMetrics, onPredict, loading
           name="studyHours"
           min="0"
           max="15"
-          step="0.5"
+          step="1"
           value={metrics.studyHours}
           onChange={handleChange}
           className="slider"
@@ -34,15 +32,15 @@ export default function PredictionForm({ metrics, setMetrics, onPredict, loading
 
       <div className="form-group">
         <label htmlFor="sleepHours">
-          Sleep Hours (4-12)
+          Sleep Hours (0-12)
         </label>
         <input
           type="range"
           id="sleepHours"
           name="sleepHours"
-          min="4"
+          min="0"
           max="12"
-          step="0.5"
+          step="1"
           value={metrics.sleepHours}
           onChange={handleChange}
           className="slider"
@@ -91,7 +89,7 @@ export default function PredictionForm({ metrics, setMetrics, onPredict, loading
         disabled={loading}
         className="predict-button"
       >
-        {loading ? '⏳ Calculating...' : '🚀 Get Prediction'}
+        {loading ? '🔄 Predicting...' : '🔮 Predict Score'}
       </button>
     </div>
   );

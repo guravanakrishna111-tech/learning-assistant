@@ -18,20 +18,12 @@ export function predictExamScore(metrics) {
   // Validate inputs
   const validMetrics = validateMetrics(metrics);
 
-  // Normalize inputs
-  const normalized = {
-    studyHours: normalizeValue(validMetrics.studyHours, 0, 15),
-    sleepHours: normalizeValue(validMetrics.sleepHours, 4, 12),
-    previousScore: normalizeValue(validMetrics.previousScore, 0, 100),
-    practiceTests: normalizeValue(validMetrics.practiceTests, 0, 10)
-  };
-
-  // Linear regression formula
+  // Linear regression formula using raw features (matching Python)
   let prediction = intercept;
-  prediction += normalized.studyHours * coefficients.studyHours;
-  prediction += normalized.sleepHours * coefficients.sleepHours;
-  prediction += normalized.previousScore * coefficients.previousScore;
-  prediction += normalized.practiceTests * coefficients.practiceTests;
+  prediction += validMetrics.studyHours * coefficients.studyHours;
+  prediction += validMetrics.sleepHours * coefficients.sleepHours;
+  prediction += validMetrics.previousScore * coefficients.previousScore;
+  prediction += validMetrics.practiceTests * coefficients.practiceTests;
 
   // Clip to valid range [0, 100]
   const clipped = Math.max(0, Math.min(100, prediction));
@@ -46,25 +38,25 @@ export function predictExamScore(metrics) {
       min: Math.max(0, Math.round(clipped - margin)),
       max: Math.min(100, Math.round(clipped + margin))
     },
-    factors: calculateFactorImportance(coefficients, normalized)
+    factors: calculateFactorImportance(coefficients, validMetrics)
   };
 }
 
 /**
  * Calculate relative importance of each factor
  */
-function calculateFactorImportance(coefficients, normalized) {
+function calculateFactorImportance(coefficients, metrics) {
   const contributions = {
-    studyHours: Math.abs(normalized.studyHours * coefficients.studyHours),
-    sleepHours: Math.abs(normalized.sleepHours * coefficients.sleepHours),
-    previousScore: Math.abs(normalized.previousScore * coefficients.previousScore),
-    practiceTests: Math.abs(normalized.practiceTests * coefficients.practiceTests)
+    studyHours: Math.abs(metrics.studyHours * coefficients.studyHours),
+    sleepHours: Math.abs(metrics.sleepHours * coefficients.sleepHours),
+    previousScore: Math.abs(metrics.previousScore * coefficients.previousScore),
+    practiceTests: Math.abs(metrics.practiceTests * coefficients.practiceTests)
   };
 
   const total = Object.values(contributions).reduce((a, b) => a + b, 0);
 
   return Object.fromEntries(
-    Object.entries(contributions).map(([key, val]) => [key, (val / total * 100).toFixed(1)])
+    Object.entries(contributions).map(([key, val]) => [key, total > 0 ? (val / total * 100).toFixed(1) : '0.0'])
   );
 }
 
@@ -74,14 +66,14 @@ function calculateFactorImportance(coefficients, normalized) {
 function validateMetrics(metrics) {
   const defaults = {
     studyHours: 5,
-    sleepHours: 7,
+    sleepHours: 6,
     previousScore: 60,
     practiceTests: 3
   };
 
   const ranges = {
     studyHours: [0, 15],
-    sleepHours: [4, 12],
+    sleepHours: [0, 12],
     previousScore: [0, 100],
     practiceTests: [0, 10]
   };
@@ -90,7 +82,7 @@ function validateMetrics(metrics) {
 
   Object.keys(validated).forEach(key => {
     const [min, max] = ranges[key];
-    validated[key] = Math.max(min, Math.min(max, Number(validated[key]) || defaults[key]));
+    validated[key] = Math.max(min, Math.min(max, Number(validated[key]) ?? defaults[key]));
   });
 
   return validated;

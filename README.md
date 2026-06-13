@@ -44,6 +44,17 @@ This project demonstrates practical frontend development skills including compon
 * Calculate efficiency score
 * Track performance trends
 
+### 🔮 Performance Predictor
+
+An advanced feature integrating a Multiple Linear Regression model (originally trained in Python/scikit-learn) directly into the dashboard:
+* **Interactive Inputs (Streamlit-style sidebar)**: Adjust Study Hours, Sleep Hours, Previous Score, and Practice Tests via integer sliders.
+* **Exact Model Prediction**: Evaluates predictions using raw coefficients trained on 200 student records (`studyHours: 3.05`, `sleepHours: 0.09`, `previousScore: 0.42`, `practiceTests: 1.68`, `intercept: -3.39`), guaranteeing mathematical alignment with the Python version.
+* **Seeded Train-Test Split (80/20)**: Splitting is done deterministically (seed 42) in JavaScript to run metrics and predictions on the 20% test subset (40 items).
+* **Matplotlib-style Visualizations**: Live interactive scatter charts using Recharts representing "Study Hours vs Exam Score" (full dataset) and "Actual vs Predicted" (test set).
+* **Model Validation Metrics**: Displays the model's MAE (`2.30`) and R² score (`0.96`) dynamically.
+* **Interactive Dataset Preview**: View the first 20 records of the generated dataset on-screen.
+* **Streamlit Alerts**: Displays responsive Success/Info/Warning feedback panels.
+
 ### 🧮 Calculator
 
 * Built-in calculator utility

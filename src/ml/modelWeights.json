@@ -1,35 +1,17 @@
 {
   "modelType": "LinearRegression",
-  "version": "1.0",
-  "timestamp": "2024-01-01T00:00:00Z",
+  "version": "1.1",
+  "timestamp": "2026-06-13T00:00:00Z",
   "coefficients": {
-    "studyHours": 3.2,
-    "sleepHours": 1.1,
-    "previousScore": 0.4,
-    "practiceTests": 1.5
+    "studyHours": 3.05268099,
+    "sleepHours": 0.08636946,
+    "previousScore": 0.41502612,
+    "practiceTests": 1.68090291
   },
-  "intercept": 5.0,
+  "intercept": -3.38754771,
   "metrics": {
-    "r2Score": 0.87,
-    "mae": 4.5,
+    "r2Score": 0.96124979,
+    "mae": 2.29523661,
     "trainingSetSize": 200
-  },
-  "featureScaling": {
-    "studyHours": {
-      "min": 0,
-      "max": 15
-    },
-    "sleepHours": {
-      "min": 4,
-      "max": 12
-    },
-    "previousScore": {
-      "min": 0,
-      "max": 100
-    },
-    "practiceTests": {
-      "min": 0,
-      "max": 10
-    }
   }
 }
