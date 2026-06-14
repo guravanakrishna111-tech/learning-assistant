@@ -12,6 +12,8 @@ The **Student Dashboard** is a multi-page web application designed to improve st
 This project demonstrates practical frontend development skills including component architecture, state management, responsive design, and modular styling.
 
 ---
+## 🚀 Live Demo
+https://learning-assistant-mauve.vercel.app/#/
 
 ## ✨ Features
 
