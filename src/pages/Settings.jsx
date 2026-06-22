@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom';
 import './Settings.css'
 import { getSettings, saveSettings, onSettingsChange } from '../firebase/firebaseService';
 import { saveTasks } from '../firebase/firebaseService';
@@ -21,13 +22,25 @@ const Settings = ({ user, Tasks, setTasks }) => {
   // Load settings on mount
   useEffect(() => {
     if (!user?.uid) {
-      setLoading(false);
-      return;
+      setSettings({
+        darkMode: false,
+        username: '',
+        notifications: true,
+        emailNotifications: false
+      });
+      setUsername('');
+      return undefined;
     }
 
-    setLoading(true);
-    getSettings(user.uid)
-      .then(data => {
+    let isActive = true;
+
+    const loadSettings = async () => {
+      setLoading(true);
+
+      try {
+        const data = await getSettings(user.uid);
+        if (!isActive) return;
+
         const loadedSettings = data || {
           darkMode: false,
           username: '',
@@ -36,14 +49,15 @@ const Settings = ({ user, Tasks, setTasks }) => {
         };
         setSettings(loadedSettings);
         setUsername(loadedSettings.username || '');
-      })
-      .catch(err => {
+      } catch (err) {
         console.error('Error loading settings:', err);
-        setError('Failed to load settings');
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+        if (isActive) setError('Failed to load settings');
+      } finally {
+        if (isActive) setLoading(false);
+      }
+    };
+
+    loadSettings();
 
     // Real-time listener for settings changes
     const unsubscribe = onSettingsChange(user.uid, (data) => {
@@ -57,7 +71,10 @@ const Settings = ({ user, Tasks, setTasks }) => {
       setUsername(updatedSettings.username || '');
     });
 
-    return unsubscribe;
+    return () => {
+      isActive = false;
+      unsubscribe();
+    };
   }, [user?.uid]);
 
   // Apply dark mode
@@ -156,7 +173,7 @@ const Settings = ({ user, Tasks, setTasks }) => {
     return (
       <div className='SettingsContainer'>
         <p style={{ textAlign: 'center', color: '#666' }}>
-          Please <a href="/login" style={{color:'#667eea'}}>sign in</a> to access settings
+          Please <Link to="/login" style={{color:'#667eea'}}>sign in</Link> to access settings
         </p>
       </div>
     );

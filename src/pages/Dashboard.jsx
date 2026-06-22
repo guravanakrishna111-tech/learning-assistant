@@ -96,7 +96,7 @@ const Dashboard = ({ user, Tasks = [], resources = [] }) => {
     return (
       <div className="DashboardContainer">
         <p style={{ textAlign: 'center', color: '#666' }}>
-          Please <a href="/login" style={{ color: '#667eea' }}>sign in</a> to view your dashboard
+          Please <Link to="/login" style={{ color: '#667eea' }}>sign in</Link> to view your dashboard
         </p>
       </div>
     );

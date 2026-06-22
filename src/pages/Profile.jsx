@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import prof from '../assets/profile.jpeg';
+import { Link } from 'react-router-dom';
 import './Profile.css';
 import { getProfile, saveProfile, onProfileChange, uploadProfileImage } from '../firebase/firebaseService';
 
@@ -150,7 +151,7 @@ const Profile = ({ user, score = 0, Tasks = [] }) => {
     return (
       <div className="ProfileContainer">
         <p style={{ textAlign: 'center', color: '#666' }}>
-          Please <a href="/login" style={{ color: '#667eea' }}>sign in</a> to view your profile
+          Please <Link to="/login" style={{ color: '#667eea' }}>sign in</Link> to view your profile
         </p>
       </div>
     );

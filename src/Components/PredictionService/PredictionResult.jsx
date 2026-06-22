@@ -2,7 +2,7 @@ import React from 'react';
 import PredictionGraphs from './PredictionGraphs';
 import './PredictionResult.css';
 
-export default function PredictionResult({ prediction, metrics }) {
+export default function PredictionResult({ prediction }) {
   // Format the score display
   const scoreFormatted = prediction.prediction.toFixed(2);
 

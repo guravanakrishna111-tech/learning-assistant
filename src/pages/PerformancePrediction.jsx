@@ -33,7 +33,7 @@ export default function PerformancePrediction({ user }) {
     } catch (err) {
       console.error('Error initializing predictor model data:', err);
     }
-  }, []);
+  }, [metrics]);
 
   const handlePredict = async () => {
     setLoading(true);
@@ -52,20 +52,19 @@ export default function PerformancePrediction({ user }) {
     }
   };
 
-  const loadRecommendations = async () => {
-    if (!user?.uid) return;
-    try {
-      const recs = await generateRecommendations(user.uid);
-      setRecommendations(recs);
-    } catch (err) {
-      console.error('Error loading recommendations:', err);
-    }
-  };
-
   useEffect(() => {
-    if (user?.uid && prediction) {
-      loadRecommendations();
-    }
+    if (!user?.uid || !prediction) return;
+
+    const loadRecommendations = async () => {
+      try {
+        const recs = await generateRecommendations(user.uid);
+        setRecommendations(recs);
+      } catch (err) {
+        console.error('Error loading recommendations:', err);
+      }
+    };
+
+    loadRecommendations();
   }, [user?.uid, prediction]);
 
   return (

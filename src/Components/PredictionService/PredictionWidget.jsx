@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { getPrediction } from '../../services/performancePredictionService';
 import './PredictionWidget.css';
 
-export default function PredictionWidget({ user, recentMetrics }) {
+export default function PredictionWidget({ recentMetrics }) {
   const [prediction, setPrediction] = useState(null);
   const [loading, setLoading] = useState(false);
 

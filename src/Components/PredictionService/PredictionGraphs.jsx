@@ -23,7 +23,7 @@ export default function PredictionGraphs({ dataset, predictions }) {
   }));
 
   // Prepare data for Actual vs Predicted chart
-  const actualVsPredictedData = predictions.map((pred, idx) => ({
+  const actualVsPredictedData = predictions.map((pred) => ({
     x: pred.actual,
     y: pred.predicted,
     actual: pred.actual,

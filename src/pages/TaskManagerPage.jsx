@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom';
 import './TaskManagerPage.css'
 import { saveTasks } from '../firebase/firebaseService';
 
@@ -16,15 +17,28 @@ const TaskManagerPage = ({ user, Tasks, setTasks }) => {
 
   // Save tasks whenever they change
   useEffect(() => {
-    if (user?.uid && Tasks.length > 0) {
+    if (!user?.uid || Tasks.length === 0) return undefined;
+
+    let isActive = true;
+
+    const syncTasks = async () => {
       setSaving(true);
-      saveTasks(user.uid, Tasks)
-        .catch(err => {
-          console.error('Error saving tasks:', err);
-          setError('Failed to save task');
-        })
-        .finally(() => setSaving(false));
-    }
+
+      try {
+        await saveTasks(user.uid, Tasks);
+      } catch (err) {
+        console.error('Error saving tasks:', err);
+        if (isActive) setError('Failed to save task');
+      } finally {
+        if (isActive) setSaving(false);
+      }
+    };
+
+    syncTasks();
+
+    return () => {
+      isActive = false;
+    };
   }, [Tasks, user?.uid]);
 
   const addTask = () => {
@@ -97,7 +111,7 @@ const TaskManagerPage = ({ user, Tasks, setTasks }) => {
     return (
       <div className='TaskManagerPageContainer'>
         <p style={{ textAlign: 'center', color: '#666' }}>
-          Please <a href="/login" style={{color:'#667eea'}}>sign in</a> to manage tasks
+          Please <Link to="/login" style={{color:'#667eea'}}>sign in</Link> to manage tasks
         </p>
       </div>
     );

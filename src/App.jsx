@@ -82,7 +82,7 @@ useEffect(() => {
       })
       .catch(error => console.error('Error fetching initial tasks:', error));
   }
-}, [user?.uid]);
+}, [user?.uid, Tasks.length]);
 
 const completedTasks = Tasks.filter(t => t.completed).length;
 const score = Tasks.length ? Math.round((completedTasks / Tasks.length) * 100) : 0;

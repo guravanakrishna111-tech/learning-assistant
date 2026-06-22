@@ -1,13 +1,6 @@
 import modelWeights from './modelWeights.json';
 
 /**
- * Normalize input value to 0-1 scale
- */
-function normalizeValue(value, min, max) {
-  return (value - min) / (max - min);
-}
-
-/**
  * Main prediction function
  * @param {Object} metrics - {studyHours, sleepHours, previousScore, practiceTests}
  * @returns {Object} - {prediction, confidence, range, factors}
@@ -82,7 +75,10 @@ function validateMetrics(metrics) {
 
   Object.keys(validated).forEach(key => {
     const [min, max] = ranges[key];
-    validated[key] = Math.max(min, Math.min(max, Number(validated[key]) ?? defaults[key]));
+    const numericValue = Number(validated[key]);
+    validated[key] = Number.isFinite(numericValue)
+      ? Math.max(min, Math.min(max, numericValue))
+      : defaults[key];
   });
 
   return validated;

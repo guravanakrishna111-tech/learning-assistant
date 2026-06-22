@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react'
+import React, { useMemo } from 'react'
 import {
   BarChart, Bar, LineChart, Line, PieChart, Pie, Cell,
   XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer
@@ -6,8 +6,6 @@ import {
 import './Analytics.css'
 
 const Analytics = ({ Tasks = [] }) => {
-  const [timeframe, setTimeframe] = useState('week')
-
   const getEmoji = (category) => {
     const emojis = { Study: '📚', Work: '💼', Personal: '🎯', Health: '💪' }
     return emojis[category] || '📋'

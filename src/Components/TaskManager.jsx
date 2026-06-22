@@ -20,7 +20,7 @@ const TaskManager = ({ Tasks, setTasks,score}) => {
     const updated = [...Tasks]
     updated[index].completed = !updated[index].completed
     setTasks(updated)
-    if(!updated[index].complted){
+    if(updated[index].completed){
       setStreak(prev=>prev+1)
     }
     else

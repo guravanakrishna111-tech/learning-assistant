@@ -2,27 +2,23 @@ import React, { useState, useEffect, useMemo } from 'react'
 import './History.css'
 import { getCalculationHistory, deleteCalculation, clearCalculationHistory, onCalculationsChange } from '../firebase/firebaseService';
 
-const History = ({ user, Tasks = [], completedTasks = 0 }) => {
+const History = ({ user, Tasks = [] }) => {
   const [calculationHistory, setCalculationHistory] = useState([]);
-  const [taskHistory, setTaskHistory] = useState(Tasks.filter(t => t.completed) || []);
   const [activeTab, setActiveTab] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
-  const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const taskHistory = useMemo(() => (Tasks || []).filter((task) => task.completed), [Tasks]);
 
   // Load calculation history on mount and user change
   useEffect(() => {
     if (user?.uid) {
-      setLoading(true);
       getCalculationHistory(user.uid)
         .then(data => {
           setCalculationHistory(data);
-          setLoading(false);
         })
         .catch(err => {
           console.error('Error loading calculation history:', err);
           setError('Failed to load calculation history');
-          setLoading(false);
         });
 
       // Real-time listener for calculation changes
@@ -33,16 +29,6 @@ const History = ({ user, Tasks = [], completedTasks = 0 }) => {
       return unsubscribe;
     }
   }, [user?.uid]);
-
-  // Update task history when Tasks change
-  useEffect(() => {
-    try {
-      const tasks = Tasks || [];
-      setTaskHistory(tasks.filter(t => t.completed));
-    } catch {
-      setTaskHistory([]);
-    }
-  }, [Tasks]);
 
   const deleteCalculationHistory = async (index) => {
     try {
