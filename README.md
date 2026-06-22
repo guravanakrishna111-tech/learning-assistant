@@ -1,10 +1,7 @@
-# Student Dashboard
-
+# Learning Assistant 
 A React + Vite student productivity app for managing study tasks, tracking progress, storing study resources, and exploring a built-in student performance prediction feature.
 
-## Live Demo
-
-https://learning-assistant-mauve.vercel.app/#/
+Live demo: https://learning-assistant-mauve.vercel.app/#/
 
 ## What it does
 
@@ -96,3 +93,4 @@ Before using authentication in production, make sure:
 ## Author
 
 Krishna
+
