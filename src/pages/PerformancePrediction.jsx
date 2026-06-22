@@ -43,7 +43,12 @@ export default function PerformancePrediction({ user }) {
       setPrediction(result);
 
       if (user?.uid) {
-        await savePredictionHistory(user.uid, result, metrics);
+        try {
+          await savePredictionHistory(user.uid, result, metrics);
+        } catch (saveError) {
+          // Keep the prediction usable even if Firestore history writes are blocked.
+          console.warn('Prediction history could not be saved:', saveError);
+        }
       }
     } catch (err) {
       setError(err.message);
